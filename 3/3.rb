@@ -8,19 +8,19 @@ class Diagnostic
     end
 
     def calculate_consumption
-        puts "Gamma"
-        p gamma = calculate_gamma
-        puts "Consumption"
-        puts gamma * calculate_epsilon(gamma)
+        puts <<~HEREDOC
+          Gamma: #{gamma = calculate_gamma}
+          Epsilon: #{epsilon = calculate_epsilon(gamma)}
+          Consumption: #{gamma * epsilon}
+        HEREDOC
     end
 
     def calculate_life_support_rating
-        puts "Oxy gen rating:"
-        p oxy_gen_rating = calculate_ratings(mode: :ogr)
-        puts "co2 scrubber rating:"
-        p co2_scrubber = calculate_ratings(mode: :csr)
-        puts "Life support rating:"
-        p oxy_gen_rating * co2_scrubber
+        puts <<~HEREDOC
+          Oxy Gen Rating: #{oxy_gen_rating = calculate_ratings(mode: :ogr)}
+          CO2 Scrubber Rating: #{co2_scrubber = calculate_ratings(mode: :csr)}
+          Life Support Rating: #{oxy_gen_rating * co2_scrubber}
+        HEREDOC
     end
     
     private
@@ -65,7 +65,8 @@ class Diagnostic
                 diff = mask & i
                 num_of1s += 1 if diff > 0 
             end
-            result = result | mask if num_of1s >= input.size - num_of1s 
+            is_majority = num_of1s >= input.size - num_of1s 
+            result = result | mask if is_majority
             mask = mask << 1
         end
         result
